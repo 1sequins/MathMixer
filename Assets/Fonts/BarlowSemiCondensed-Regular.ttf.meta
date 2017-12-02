@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9384c631d78b84e419832a859140a4e2
+timeCreated: 1511212814
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Barlow Semi Condensed
+  fontNames:
+  - Barlow Semi Condensed
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
