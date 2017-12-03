@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject winScreen;
+
     private GoalTotal[] _goalTotals;
 
     void Awake()
@@ -46,10 +48,16 @@ public class GameController : MonoBehaviour
         if(levelComplete)
         {
             Debug.Log("Level Complete!");
+            DisplayWin();
         }
         else
         {
             Debug.Log("Level incomplete");
         }
+    }
+
+    private void DisplayWin()
+    {
+        winScreen.SetActive(true);
     }
 }
