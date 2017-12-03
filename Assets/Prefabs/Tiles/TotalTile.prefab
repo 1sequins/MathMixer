@@ -97,6 +97,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   total: 8
   goalColor: {r: 0.3372549, g: 0.89019614, b: 1, a: 1}
+  goalCompletedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114172599959752048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,6 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a33e3d562ce354794bf5f83103318a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathUpdatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114813175077865712
 MonoBehaviour:
   m_ObjectHideFlags: 1
