@@ -24,7 +24,10 @@ public class GoalDisplay : MonoBehaviour
 
     public void SetGoal(GoalTotal newGoal)
     {
-        //_goalTotal.Path.pathUpdatedEvent.RemoveListener(UpdateText);
+        if(_goalTotal != null)
+        {
+            _goalTotal.Path.pathUpdatedEvent.RemoveListener(UpdateText);
+        }
 
         _goalTotal = newGoal;
 

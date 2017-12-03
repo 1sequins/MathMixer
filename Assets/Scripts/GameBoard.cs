@@ -34,6 +34,9 @@ public class GameBoard : MonoBehaviour
 
                         GameTile tileLink = _tiles[x + y * boardHeight];
 
+                        // Don't link same type tiles (number => number / symbol => symbol)
+                        if(tile.GetType() == tileLink.GetType()) { continue; }
+
                         tile.AddTileLink(tileLink);
                     }
                 }

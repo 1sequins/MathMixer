@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(NumberTile))]
@@ -10,9 +11,12 @@ public class GoalTotal : MonoBehaviour
     public int total;
     public Color goalColor;
 
+    public UnityEvent goalCompletedEvent;
+
     public int CurrentTotal { get { return _linkedPath.PathTotal; } }
     public GameTile ActiveTile { get { return _linkedPath.ActiveTile; } }
     public LinkedPath Path { get { return _linkedPath; } }
+    public bool Complete { get; private set; }
 
     private NumberTile _tile;
     private LinkedPath _linkedPath;
@@ -37,10 +41,14 @@ public class GoalTotal : MonoBehaviour
     {
         if (_linkedPath.PathTotal == total)
         {
+            Complete = true;
             _spriteImage.color = Color.yellow;
+
+            goalCompletedEvent.Invoke();
         }
         else
         {
+            Complete = false;
             _spriteImage.color = goalColor;
         }
     }
