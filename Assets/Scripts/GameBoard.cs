@@ -27,6 +27,9 @@ public class GameBoard : MonoBehaviour
             {
                 GameTile tile = _tiles[i + j * boardHeight];
 
+                // Don't link empty tiles
+                if(tile.GetType() == typeof(EmptyTile)) { continue; }
+
                 for(int x = i - 1; x <= i + 1; x++)
                 {
                     for(int y = j - 1; y <= j + 1; y++)
@@ -35,6 +38,9 @@ public class GameBoard : MonoBehaviour
                         if((x < 0 || x >= boardWidth) || (y < 0 || y >= boardHeight)) { continue; }
 
                         GameTile tileLink = _tiles[x + y * boardHeight];
+
+                        // Don't link empty tiles
+                        if (tileLink.GetType() == typeof(EmptyTile)) { continue; }
 
                         // Don't link same type tiles (number => number / symbol => symbol)
                         if(tile.GetType() == tileLink.GetType()) { continue; }
