@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Text totalText;
-
     private GoalTotal _currentGoal;
 
     private EquationGenerator _equationGenerator;

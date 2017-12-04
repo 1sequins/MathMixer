@@ -8,6 +8,11 @@ public class EquationGenerator : MonoBehaviour
 {
     public Text equationText;
 
+    void Start()
+    {
+        equationText.text = "";
+    }
+
     public void UpdateEquation(LinkedPath path)
     {
         equationText.text = GetEquationString(path);

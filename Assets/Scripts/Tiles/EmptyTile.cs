@@ -6,13 +6,13 @@ public class EmptyTile : GameTile
 {
     protected override void Awake()
     {
-        base.Awake();
+        //base.Awake();
     }
 
     // Use this for initialization
     protected override void Start()
     {
-        base.Start();
+        //base.Start();
     }
 
     public override void OnClick()

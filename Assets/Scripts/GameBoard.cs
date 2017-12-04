@@ -25,7 +25,7 @@ public class GameBoard : MonoBehaviour
         {
             for(int j = 0; j < boardHeight; j++)
             {
-                GameTile tile = _tiles[i + j * boardHeight];
+                GameTile tile = _tiles[i + j * boardWidth];
 
                 // Don't link empty tiles
                 if(tile.GetType() == typeof(EmptyTile)) { continue; }
@@ -37,7 +37,7 @@ public class GameBoard : MonoBehaviour
                         // Check for valid board space
                         if((x < 0 || x >= boardWidth) || (y < 0 || y >= boardHeight)) { continue; }
 
-                        GameTile tileLink = _tiles[x + y * boardHeight];
+                        GameTile tileLink = _tiles[x + y * boardWidth];
 
                         // Don't link empty tiles
                         if (tileLink.GetType() == typeof(EmptyTile)) { continue; }
