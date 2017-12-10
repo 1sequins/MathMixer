@@ -8,6 +8,7 @@ public class GoalLinkages : MonoBehaviour
 {
     public int maxFill = 1;
     public GameObject dotPrefab;
+    public GameObject tileLinkPrefab;
     public Color fillColor;
 
     public int Fill
@@ -28,6 +29,7 @@ public class GoalLinkages : MonoBehaviour
 
     private Image[] _fillDots;
     private GoalTotal[] _goalLinks;
+    private GameObject[] _goalLines;
     private Color _originalDotColor;
 
     private Image _spriteImage;
@@ -39,6 +41,7 @@ public class GoalLinkages : MonoBehaviour
     {
         _fillDots = new Image[maxFill];
         _goalLinks = new GoalTotal[maxFill];
+        _goalLines = new GameObject[maxFill];
         _originalDotColor = dotPrefab.GetComponent<Image>().color;
 
         _spriteImage = GetComponent<Image>();
@@ -75,7 +78,7 @@ public class GoalLinkages : MonoBehaviour
         }
     }
 
-    public bool FillGoal(GoalTotal goal)
+    public bool FillGoal(GoalTotal goal, GameTile prevTile)
     {
         if (Filled) { return false; }
 
@@ -96,6 +99,7 @@ public class GoalLinkages : MonoBehaviour
         }
 
         _goalLinks[fillIndex] = goal;
+        LinkTiles(prevTile, fillIndex);
 
         Fill++;
 
@@ -109,30 +113,13 @@ public class GoalLinkages : MonoBehaviour
 
     public GoalTotal EmptyGoal()
     {
-        Fill--;
-
-        GoalTotal removedGoal = null;
-
-        if(maxFill > 1)
-        {
-            _fillDots[_fill].color = _originalDotColor;
-        }
-
-        removedGoal = _goalLinks[_fill];
-        _goalLinks[_fill] = null;
-
-        if(!Filled)
-        {
-            _spriteImage.color = _originalSpriteColor;
-        }
-
-        return removedGoal;
+        Debug.Log(Fill);
+        return EmptyGoal(_goalLinks[_fill - 1]);
     }
 
     public GoalTotal EmptyGoal(GoalTotal goal)
     {
-        Fill--;
-
+        Debug.Log("Emptying");
         int fillIndex = -1;
 
         for (int i = 0; i < _goalLinks.Length; i++)
@@ -159,7 +146,9 @@ public class GoalLinkages : MonoBehaviour
 
         removedGoal = _goalLinks[fillIndex];
         _goalLinks[fillIndex] = null;
+        Destroy(_goalLines[fillIndex]);
 
+        Fill--;
         if (!Filled)
         {
             _spriteImage.color = _originalSpriteColor;
@@ -179,6 +168,18 @@ public class GoalLinkages : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void LinkTiles(GameTile prevTile, int linkIndex)
+    {
+        if (prevTile != null)
+        {
+            _goalLines[linkIndex] = Instantiate(tileLinkPrefab, prevTile.transform);
+            LineRenderer linkLine = _goalLines[linkIndex].GetComponent<LineRenderer>();
+            linkLine.startColor = linkLine.endColor = _goalLinks[linkIndex].goalColor;
+            Vector2 toPosition = this.GetComponent<RectTransform>().anchoredPosition - prevTile.GetComponent<RectTransform>().anchoredPosition;
+            linkLine.SetPosition(1, toPosition);
+        }
     }
 
     private GoalTotal GetLinkedGoal()

@@ -55,10 +55,14 @@ public class GameBoard : MonoBehaviour
     private IEnumerator LinkTile(GameTile t1, GameTile t2)
     {
         yield return new WaitForEndOfFrame();
-        GameObject link = Instantiate(tileLinkPrefab, t1.transform);
-        LineRenderer linkLine = link.GetComponent<LineRenderer>();
-        Vector2 toPosition = t2.GetComponent<RectTransform>().anchoredPosition - t1.GetComponent<RectTransform>().anchoredPosition;
-        linkLine.SetPosition(1, toPosition);
-        t1.AddTileLink(t2);
+        if (!t1.ContainsTileLink(t2))
+        {
+            GameObject link = Instantiate(tileLinkPrefab, t1.transform);
+            LineRenderer linkLine = link.GetComponent<LineRenderer>();
+            Vector2 toPosition = t2.GetComponent<RectTransform>().anchoredPosition - t1.GetComponent<RectTransform>().anchoredPosition;
+            linkLine.SetPosition(1, toPosition);
+
+            t1.AddTileLink(t2);
+        }
     }
 }

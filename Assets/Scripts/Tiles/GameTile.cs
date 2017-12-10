@@ -47,9 +47,9 @@ public class GameTile : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
-    public virtual void FillTile(GoalTotal goal)
+    public virtual void FillTile(GoalTotal goal, GameTile prevTile)
     {
-        _goalLinks.FillGoal(goal);
+        _goalLinks.FillGoal(goal, prevTile);
     }
 
     public virtual void EmptyTile()
@@ -72,6 +72,12 @@ public class GameTile : MonoBehaviour
         if(!_linkedTiles.Contains(tile))
         {
             _linkedTiles.Add(tile);
+        }
+
+        if(!tile.ContainsTileLink(this))
+        {
+            // Link it back
+            tile.AddTileLink(this);
         }
     }
 

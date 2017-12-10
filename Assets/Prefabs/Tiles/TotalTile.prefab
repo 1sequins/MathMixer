@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d113de38cf36dc4e9261dd36ba95836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileLinkPrefab: {fileID: 1816817074040492, guid: 2e3c294cfbe2a9b49a8a6d84595d2486,
+    type: 2}
   number: 2
 --- !u!114 &114466610318793714
 MonoBehaviour:

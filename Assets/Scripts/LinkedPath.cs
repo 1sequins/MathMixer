@@ -32,8 +32,10 @@ public class LinkedPath : MonoBehaviour
 
     public void LinkTile(GameTile nextTile)
     {
+        GameTile previousTile = (_tileStack.Count > 0) ? _tileStack.Peek() : null;
+
         _tileStack.Push(nextTile);
-        nextTile.FillTile(_goalTotal);
+        nextTile.FillTile(_goalTotal, previousTile);
 
         if(nextTile.GetType() == typeof(NumberTile))
         {
