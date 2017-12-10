@@ -122,7 +122,7 @@ public class GoalLinkages : MonoBehaviour
         Debug.Log("Emptying");
         int fillIndex = -1;
 
-        for (int i = 0; i < _goalLinks.Length; i++)
+        for (int i = _goalLinks.Length - 1; i >= 0; i--)
         {
             if (_goalLinks[i] == goal)
             {

@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFill: 2
   dotPrefab: {fileID: 1010436276532574, guid: e3d820f88a1e1ed4f86da15c9a262d80, type: 2}
+  tileLinkPrefab: {fileID: 1816817074040492, guid: 2e3c294cfbe2a9b49a8a6d84595d2486,
+    type: 2}
   fillColor: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 1}
 --- !u!114 &114773214592049576
 MonoBehaviour:
@@ -150,8 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83f0aa76338158479fda27c3f52821e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileLinkPrefab: {fileID: 1816817074040492, guid: 2e3c294cfbe2a9b49a8a6d84595d2486,
-    type: 2}
   symbol: 0
 --- !u!114 &114866758656203562
 MonoBehaviour:
