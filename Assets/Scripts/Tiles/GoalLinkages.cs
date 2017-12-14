@@ -25,7 +25,7 @@ public class GoalLinkages : MonoBehaviour
     public bool Filled { get { return _fill >= maxFill; } }
 
     public GoalTotal LinkedGoal { get { return GetLinkedGoal(); } }
-    public GoalTotal ActiveLink { get { return HasActiveLinkedGoal(); } }
+    public GoalTotal ActiveLink { get { return ActiveLinkedGoal(); } }
 
     private Image[] _fillDots;
     private GoalTotal[] _goalLinks;
@@ -119,7 +119,6 @@ public class GoalLinkages : MonoBehaviour
 
     public GoalTotal EmptyGoal(GoalTotal goal)
     {
-        Debug.Log("Emptying");
         int fillIndex = -1;
 
         for (int i = _goalLinks.Length - 1; i >= 0; i--)
@@ -157,7 +156,7 @@ public class GoalLinkages : MonoBehaviour
         return removedGoal;
     }
 
-    public GoalTotal HasActiveLinkedGoal()
+    public GoalTotal ActiveLinkedGoal()
     {
         for(int i = _goalLinks.Length - 1; i >= 0; i--)
         {
@@ -168,6 +167,22 @@ public class GoalLinkages : MonoBehaviour
         }
 
         return null;
+    }
+
+    public bool HasLinkedGoal(GoalTotal goal)
+    {
+        bool hasGoal = false;
+
+        foreach(GoalTotal gt in _goalLinks)
+        {
+            if(gt == goal)
+            {
+                hasGoal = true;
+                break;
+            }
+        }
+
+        return hasGoal;
     }
 
     private void LinkTiles(GameTile prevTile, int linkIndex)

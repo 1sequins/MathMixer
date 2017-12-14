@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameTile : MonoBehaviour
 {
     public bool Filled { get { return _goalLinks.Filled; } }
-
+    public GoalTotal LinkedGoal { get { return _goalLinks.LinkedGoal; } }
     public GoalTotal ActiveLink { get { return _goalLinks.ActiveLink; } }
 
     public virtual string Value { get { return ""; } }
@@ -60,6 +60,11 @@ public class GameTile : MonoBehaviour
     public virtual void EmptyTile(GoalTotal goal)
     {
         _goalLinks.EmptyGoal(goal);
+    }
+
+    public bool ContainsGoalLink(GoalTotal goal)
+    {
+        return _goalLinks.HasLinkedGoal(goal);
     }
 
     public virtual void OnClick()

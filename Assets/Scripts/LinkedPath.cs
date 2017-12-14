@@ -13,6 +13,7 @@ public class LinkedPath : MonoBehaviour
 
     // Current active tile in the path
     public GameTile ActiveTile { get { return _tileStack.Peek(); } }
+    public GameTile PreviousTile { get; private set; }
     public Stack<GameTile> TileStack { get { return _tileStack; } }
 
     private GoalTotal _goalTotal;
@@ -32,10 +33,10 @@ public class LinkedPath : MonoBehaviour
 
     public void LinkTile(GameTile nextTile)
     {
-        GameTile previousTile = (_tileStack.Count > 0) ? _tileStack.Peek() : null;
+        PreviousTile = (_tileStack.Count > 0) ? _tileStack.Peek() : null;
 
         _tileStack.Push(nextTile);
-        nextTile.FillTile(_goalTotal, previousTile);
+        nextTile.FillTile(_goalTotal, PreviousTile);
 
         if(nextTile.GetType() == typeof(NumberTile))
         {
@@ -60,5 +61,14 @@ public class LinkedPath : MonoBehaviour
         _goalTotal.CheckComplete();
 
         pathUpdatedEvent.Invoke();
+    }
+
+    public void UnlinkToTile(GameTile newActive)
+    {
+        Debug.Log("Unlinking to tile");
+        while(newActive != _tileStack.Peek() && _tileStack.Count > 1)
+        {
+            UnlinkTile();
+        }
     }
 }

@@ -40,7 +40,7 @@ public class TotalTile : GameTile
         EventTrigger trigger = GetComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
-        entry.callback.AddListener((data) => { input.TotalTileSelected(data); });
+        entry.callback.AddListener((data) => { input.GameTileSelected(data); });
         trigger.triggers.Add(entry);
     }
 
