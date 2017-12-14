@@ -6,6 +6,20 @@ using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour
 {
+    public float touchHoldBuffer = 0.2f;
+
+    private enum TouchState
+    {
+        None,
+        Tapped,
+        Hold,
+        Drag,
+        Release
+    }
+    private TouchState _touchState;
+
+    private Vector2 _touchStart;
+
     private GraphicRaycaster _graphicRaycaster;
     private GoalTotal _currentGoal;
     private GameTile _currentTile;
@@ -20,30 +34,85 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+        _touchState = TouchState.None;
+
+        UpdateTouchState();
+
+        switch(_touchState)
+        {
+            case TouchState.Tapped:
+                List<RaycastResult> results = RaycastFromMouse();
+
+                if (results.Count > 0)
+                {
+                    GameTile tile = GetGameTileFromRaycast(results[0]);
+
+                    if (tile != null)
+                    {
+                        SelectGoal(tile);
+                    }
+                }
+                break;
+            case TouchState.Drag:
+                if (_currentGoal != null)
+                {
+                    DragGoal();
+                }
+                break;
+            case TouchState.Release:
+                ClearGoal();
+                break;
+        }
+    }
+
+    private void UpdateTouchState()
+    {
+        // Mouse input
         if(Input.GetMouseButtonDown(0))
         {
-            List<RaycastResult> results = RaycastFromMouse();
-
-            if(results.Count > 0)
-            {
-                GameTile tile = GetGameTileFromRaycast(results[0]);
-
-                if(tile != null)
-                {
-                    SelectGoal(tile);
-                }
-            }
+            _touchState = TouchState.Tapped;
+            _touchStart = Input.mousePosition;
         }
         else if(Input.GetMouseButton(0))
         {
-            if(_currentGoal != null)
+            if(Vector2.Distance(_touchStart, Input.mousePosition) > touchHoldBuffer)
             {
-                DragGoal();
+                _touchState = TouchState.Drag;
+            }
+            else
+            {
+                _touchState = TouchState.Hold;
             }
         }
         else if(Input.GetMouseButtonUp(0))
         {
-            ClearGoal();
+            _touchState = TouchState.Release;
+        }
+
+        // Touch input
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if(touch.phase == TouchPhase.Began)
+            {
+                _touchState = TouchState.Tapped;
+                _touchStart = touch.position;
+            }
+            else if(touch.phase == TouchPhase.Moved)
+            {
+                if(Vector2.Distance(_touchStart, Input.mousePosition) > touchHoldBuffer)
+                {
+                    _touchState = TouchState.Drag;
+                }
+                else
+                {
+                    _touchState = TouchState.Hold;
+                }
+            }
+            else if(touch.phase == TouchPhase.Ended)
+            {
+                _touchState = TouchState.Release;
+            }
         }
     }
 
@@ -92,15 +161,8 @@ public class PlayerInput : MonoBehaviour
             if (tile.Filled && _currentGoal == null)
             {
                 tile.LinkedGoal.Path.UnlinkToTile(tile);
-            }
-            else if (_currentGoal != null)
-            {
-                // If the tile is linked to the current active tile in the goal
-                if (_currentGoal.ActiveTile.ContainsTileLink(tile))
-                {
-                    _currentGoal.Path.LinkTile(tile);
-                    _currentTile = tile;
-                }
+                SetCurrentTotalGoal(tile.ActiveLink);
+                _currentTile = tile;
             }
         }
 
